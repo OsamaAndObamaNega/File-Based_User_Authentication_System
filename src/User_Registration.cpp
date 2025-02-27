@@ -41,10 +41,11 @@ public:
             while(true) {
                 std::cout << "Enter ur userName: ";
                 std::cin >> input;
-                if(input.find(' ') == std::string::npos && std::isalpha(input[0]) && input.length() <= 18) {
+                if (!input.empty() && input.find(' ') == std::string::npos 
+                    && std::isalpha(input[0]) && input.length() <= 18) {
                     break;
                 }
-                std::cout << "Invalid username. Please enter a username without spaces, special characters and less than 19 characters: ";
+                std::cout << "Invalid username. Please enter a username without spaces, starts with a letter, and less than 19 characters: ";
             }
             return input;
         } catch (const std::exception& e) {
@@ -52,6 +53,7 @@ public:
             return "";
         }
     }
+
     
     static std::string getgmail() {
         std::string input;
@@ -94,7 +96,11 @@ public:
 
 int main(){
 
-    UserRegistration user(UsernameEmailEtc::getUsername(), UsernameEmailEtc::getgmail(), UsernameEmailEtc::getPassword());
+    std::string username = UsernameEmailEtc::getUsername();
+    std::string password = UsernameEmailEtc::getPassword();
+    std::string email = UsernameEmailEtc::getgmail();
+
+    UserRegistration user(username, email, password);
 
     user.printUserData();
 
