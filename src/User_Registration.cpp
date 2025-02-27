@@ -3,14 +3,38 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
-#include <fstream>
+// #include "User Registration.h"
 
 class UserRegistration{
 protected:
-    std::string* UserName, email, password;
+    std::string* UserName, *gmail, *password;
 public:
 
-    std::string getUsername(){
+    UserRegistration(std::string username, std::string gmail, std::string password) : 
+        UserName(new std::string(username)), gmail(new std::string(gmail)), password(new std::string(password))
+    {
+        std::cout << "user crated\n";
+    }
+
+    
+    void printUserData(){
+        std::cout << "username: " << *UserName << std::endl;
+        std::cout << "gmail: " << *gmail << std::endl;
+        std::cout << "password: " << *password << std::endl;
+    }
+    
+    ~UserRegistration(){
+        delete UserName;
+        delete gmail;
+        delete password;
+    }
+};
+
+
+class UsernameEmailEtc{
+public:
+
+    static std::string getUsername(){
         try 
         {
             std::string input;
@@ -29,11 +53,11 @@ public:
         }
     }
     
-    std::string getEmail() {
+    static std::string getgmail() {
         std::string input;
         
         while (true) {
-            std::cout << "\nEnter your email: ";
+            std::cout << "\nEnter your gmail: ";
             std::cin >> input;
     
             // Check if input contains exactly one "@gmail.com" at the end
@@ -43,33 +67,36 @@ public:
     
                 // Check if name is not empty, has no spaces, and starts with a letter
                 if (!name.empty() && name.find(' ') == std::string::npos && std::isalpha(name[0])) {
-                    return input; // Email is valid
+                    return input; // gmail is valid
                 }
             }
             
-            std::cout << "Invalid email! Please enter a valid Gmail address in the format 'username@gmail.com'.\n";
+            std::cout << "Invalid gmail! Please enter a valid Gmail address in the format 'username@gmail.com'.\n";
         }
     }
-    
-    
-    
-    std::string sha256(const std::string& str) {
-        unsigned char hash[SHA256_DIGEST_LENGTH]; // Array to store hash output
-        SHA256(reinterpret_cast<const unsigned char*>(str.c_str()), str.length(), hash);
 
-        std::stringstream ss;
-        for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-            ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+    static std::string getPassword() {
+        std::string input;
+
+        while (true) {
+            std::cout << "\nEnter your password: ";
+            std::cin >> input;
+            
+            // Check if password is not empty, has no spaces, and is between 9 and 199 characters long
+            if (!input.empty() && input.find(' ') == std::string::npos && input.length() > 8 && input.length() < 200) {
+                return input; // Password is valid
+            }
+            
+            std::cout << "Invalid password! Please enter a password with no spaces and between 9 and 199 characters.\n";
         }
-        return ss.str();
     }
-    
 };
 
-
 int main(){
-    
 
-    return 0;
+    UserRegistration user(UsernameEmailEtc::getUsername(), UsernameEmailEtc::getgmail(), UsernameEmailEtc::getPassword());
+
+    user.printUserData();
+
 }
 
