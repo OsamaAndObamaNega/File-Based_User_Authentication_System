@@ -1,8 +1,8 @@
 #include <iostream>
-#include <openssl/sha.h>
 #include <iomanip>
 #include <sstream>
 #include <string>
+
 // #include "User Registration.h"
 
 class UserRegistration{
@@ -77,6 +77,7 @@ public:
         }
     }
 
+
     static std::string getPassword() {
         std::string input;
 
@@ -86,13 +87,18 @@ public:
             
             // Check if password is not empty, has no spaces, and is between 9 and 199 characters long
             if (!input.empty() && input.find(' ') == std::string::npos && input.length() > 8 && input.length() < 200) {
-                return input; // Password is valid
+                std::string EncriptedPassword = encryptWithPython(input);
+                return EncriptedPassword; // Password is valid
             }
-            
+
             std::cout << "Invalid password! Please enter a password with no spaces and between 9 and 199 characters.\n";
         }
     }
 };
+
+
+
+
 
 int main(){
 
