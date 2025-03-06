@@ -80,20 +80,20 @@ public:
 
     static std::string getPassword() {
         std::string input;
-
+    
         while (true) {
             std::cout << "\nEnter your password: ";
             std::cin >> input;
             
-            // Check if password is not empty, has no spaces, and is between 9 and 199 characters long
+            // Check if password is valid
             if (!input.empty() && input.find(' ') == std::string::npos && input.length() > 8 && input.length() < 200) {
-                std::string EncriptedPassword = encryptWithPython(input);
-                return EncriptedPassword; // Password is valid
+                return encryptPassword(input);
             }
-
+    
             std::cout << "Invalid password! Please enter a password with no spaces and between 9 and 199 characters.\n";
         }
     }
+    
 };
 
 

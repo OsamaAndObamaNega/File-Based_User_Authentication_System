@@ -1,0 +1,1 @@
+g++ your_file.cpp -o your_program -lssl -lcrypto
